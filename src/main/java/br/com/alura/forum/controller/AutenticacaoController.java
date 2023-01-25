@@ -3,6 +3,7 @@ package br.com.alura.forum.controller;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +20,7 @@ import br.com.alura.forum.service.TokenService;
 
 @RestController
 @RequestMapping("/auth")
+@Profile(value = {"prod", "test"})
 public class AutenticacaoController {
 	
 	@Autowired
@@ -39,7 +41,7 @@ public class AutenticacaoController {
 			
 		} catch (AuthenticationCredentialsNotFoundException e) {
 			
-			return ResponseEntity.badRequest().build();
-		}
+			return ResponseEntity.status(403).build();
+		} 
 	}
 }
